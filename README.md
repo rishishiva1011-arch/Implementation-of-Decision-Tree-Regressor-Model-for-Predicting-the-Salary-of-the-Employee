@@ -30,70 +30,54 @@ Program to implement the Decision Tree Regressor Model for Predicting the Salary
 Developed by: Rishikesh S
 RegisterNumber:  212225240118
 */
-# Import libraries
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.tree import DecisionTreeRegressor
+from sklearn.tree import DecisionTreeRegressor, plot_tree
 
-# ------------------------------
-# Step 1: Sample dataset
-# ------------------------------
-data = {
-    'Position': ['Business Analyst', 'Junior Consultant', 'Senior Consultant',
-                 'Manager', 'Country Manager', 'Region Manager',
-                 'Partner', 'Senior Partner', 'C-level', 'CEO'],
-    'Level': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-    'Salary': [45000, 50000, 60000, 80000, 110000, 150000, 200000, 300000, 500000, 1000000]
-}
+df = pd.read_csv("Salary.csv")
 
-df = pd.DataFrame(data)
+X = df[['Level']]
 
-# ------------------------------
-# Step 2: Split features and target
-# ------------------------------
-X = df[['Level']]     # Feature (Level)
-y = df['Salary']      # Target (Salary)
+y = df['Salary']
 
-# ------------------------------
-# Step 3: Create Decision Tree Regressor
-# ------------------------------
-regressor = DecisionTreeRegressor(random_state=42)
-regressor.fit(X, y)
+model = DecisionTreeRegressor(random_state=42)
 
-# ------------------------------
-# Step 4: Predict salary for the dataset or new levels
-# ------------------------------
-y_pred = regressor.predict(X)
-print("Predicted salaries:", y_pred)
+model.fit(X, y)
 
-# Example: predict salary for a new employee at level 6.5
-level = np.array([[6.5]])
-predicted_salary = regressor.predict(level)
-print(f"Predicted Salary for level {level[0][0]}: {predicted_salary[0]}")
+prediction = model.predict([[6.5]])
 
-# ------------------------------
-# Step 5: Visualize the results (High-resolution curve)
-# ------------------------------
-X_grid = np.arange(min(X.values), max(X.values)+0.01, 0.01)  # High-resolution for smoother curve
-X_grid = X_grid.reshape(-1, 1)
+print("Predicted Salary:", prediction[0])
 
-plt.scatter(X, y, color='red', label='Actual Salary')
-plt.plot(X_grid, regressor.predict(X_grid), color='blue', label='Decision Tree Prediction')
-plt.title('Decision Tree Regression: Level vs Salary')
-plt.xlabel('Level')
-plt.ylabel('Salary')
-plt.legend()
+plt.scatter(df['Level'], df['Salary'])
+
+plt.plot(df['Level'], model.predict(X))
+
+plt.xlabel("Position Level")
+plt.ylabel("Salary")
+plt.title("Decision Tree Regression")
+
+plt.show()
+
+plt.figure(figsize=(12,8))
+
+plot_tree(model,
+          feature_names=['Level'],
+          filled=True)
+
+plt.title("Decision Tree Regressor Tree")
+
 plt.show()
 ```
 
 ## Output:
 
-<img width="984" height="81" alt="image" src="https://github.com/user-attachments/assets/50b447a6-3fdf-4989-a583-b60a91f43cec" />
+<img width="567" height="455" alt="image" src="https://github.com/user-attachments/assets/cd66d90f-2749-42ce-8746-f93e6eecdbf7" />
+
 
 <br>
 
-<img width="567" height="455" alt="image" src="https://github.com/user-attachments/assets/04da79c6-39c5-4bd9-94ae-5ca14bfde7be" />
+<img width="950" height="658" alt="image" src="https://github.com/user-attachments/assets/1b74af0e-099f-4c78-b4d3-0b2e5383f99d" />
+
 
 ## Result:
 Thus the program to implement the Decision Tree Regressor Model for Predicting the Salary of the Employee is written and verified using python programming.
